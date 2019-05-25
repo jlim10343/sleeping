@@ -99,16 +99,11 @@ public class MainActivity extends AppCompatActivity {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!hour_select.equals("") && !minute_select.equals("") && !morn_night_select.equals("")) {
-                    Intent intent = new Intent(getBaseContext(), AppActive.class);
-                    intent.putExtra("hour", Integer.parseInt(hour_select));
-                    intent.putExtra("minute", Integer.parseInt(minute_select));
-                    intent.putExtra("meridian", morn_night_select);
-                    startActivity(intent);
-                }
-                else {
-                    Toast.makeText(getBaseContext(), "Please enter a time", Toast.LENGTH_LONG).show();
-                }
+                Intent intent = new Intent(getBaseContext(), AppActive.class);
+                intent.putExtra("hour", Integer.parseInt(hour_select));
+                intent.putExtra("minute", Integer.parseInt(minute_select));
+                intent.putExtra("meridian", morn_night_select);
+                startActivity(intent);
             }
         });
 
