@@ -34,6 +34,7 @@ public class AppActive extends AppCompatActivity {
             Log.e(TAG, "Alarm resolved");
             Intent i = new Intent(AppActive.this, MainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            unregisterReceiver(broadcastReceiver);
             startActivity(i);
         }
     };

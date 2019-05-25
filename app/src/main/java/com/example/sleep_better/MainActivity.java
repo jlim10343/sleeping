@@ -1,6 +1,8 @@
 /*
 References:
 https://trinitytuts.com/pass-data-from-broadcast-receiver-to-activity-without-reopening-activity/
+https://stackoverflow.com/questions/18310759/going-back-to-mainactivity-from-child-activity-in-android
+http://soundbible.com/2197-Analog-Watch-Alarm.html
  */
 
 package com.example.sleep_better;
@@ -40,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
             Bundle b = intent.getExtras();
             isAsleep = b.getBoolean("sleep");
             Log.e(TAG, "Alarm resolved");
+            audio = MediaPlayer.create(context,R.raw.analogwatchalarmdanielsimion);
+            audio.start();
+            unregisterReceiver(broadcastReceiver);
         }
     };
 
@@ -71,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MyAlarmReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         isAsleep = false;
-        registerReceiver(broadcastReceiver, new IntentFilter("unSleep"));
 
     }
 
@@ -94,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void playAudio(View v) {
         if(audio == null) {
-            audio = MediaPlayer.create(this,R.raw.catsound);
+            audio = MediaPlayer.create(this,R.raw.catnoise);
             audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
@@ -107,8 +111,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        super.onPause();
         if(audio != null) {
-            super.onPause();
             audio.release();
         }
     }
@@ -124,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setAlarm(View v) {
         Log.d(TAG,Integer.toString(time.getCurrentHour()));
+        registerReceiver(broadcastReceiver, new IntentFilter("unSleep"));
         isAsleep = true;
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
