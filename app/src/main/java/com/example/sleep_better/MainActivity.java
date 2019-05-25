@@ -1,5 +1,6 @@
 package com.example.sleep_better;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -54,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
         min.setAdapter(adapter2);
         amPm.setAdapter(adapter3);
 
+        Button go = findViewById(R.id.go_button);
+        go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), AppActive.class);
+                startActivity(intent);
+            }
+        });
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
     }
@@ -91,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        audio.release();
+        if(audio != null) audio.release();
     }
 
     private void stopPlayer()
