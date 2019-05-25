@@ -13,8 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class AccelerometerFragment extends Fragment {
     private SensorManager sensorManager;
@@ -24,7 +22,8 @@ public class AccelerometerFragment extends Fragment {
         @Override
         public void onSensorChanged(SensorEvent event) {
             float[] vals = event.values;
-            //Log.d("value 0", vals[0] + "");
+            Log.d("values", "magnitude: " + Math.sqrt(Math.pow(vals[0], 2) + Math.pow(vals[1], 2) + Math.pow(vals[2], 2)) +
+                    " \tvalue[] = " + vals[0] + " " + vals[1] + " " + vals[2]);
         }
 
         @Override
