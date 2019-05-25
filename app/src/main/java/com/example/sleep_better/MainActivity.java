@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -18,7 +19,9 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private MediaPlayer audio;
-
+    private String hour_select = "";
+    private String minute_select = "";
+    private String morn_night_select = "";
 
     private boolean loadFragment (Fragment fragment)
     {
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Spinner min = findViewById(R.id.minute);
         Spinner amPm = findViewById(R.id.day_or_night);
 
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.getBaseContext(),
+        final ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.getBaseContext(),
                 R.array.hours, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this.getBaseContext(),
@@ -56,12 +59,56 @@ public class MainActivity extends AppCompatActivity {
         min.setAdapter(adapter2);
         amPm.setAdapter(adapter3);
 
+        hour.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                hour_select = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        min.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                minute_select = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        amPm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                morn_night_select = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         Button go = findViewById(R.id.go_button);
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), AppActive.class);
-                startActivity(intent);
+                if(!hour_select.equals("") && !minute_select.equals("") && !morn_night_select.equals("")) {
+                    Intent intent = new Intent(getBaseContext(), AppActive.class);
+                    intent.putExtra("hour", Integer.parseInt(hour_select));
+                    intent.putExtra("minute", Integer.parseInt(minute_select));
+                    intent.putExtra("meridian", morn_night_select);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Please enter a time", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
