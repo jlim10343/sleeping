@@ -20,74 +20,56 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation"
         android:background="?android:attr/windowBackground" />
-
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="What time do you want to wake up?"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:text="Sleep Better"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.085" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="61dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/soundButton"
+        <TimePicker
+            android:id="@+id/timePicker1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Spinner
-                android:id="@+id/hour"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <Spinner
-                android:id="@+id/minute"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <Spinner
-                android:id="@+id/day_or_night"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            android:timePickerMode="spinner"/>
 
         <Button
-            android:id="@+id/soundButton"
+            android:id="@+id/playButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
             android:layout_marginTop="380dp"
             android:onClick="playAudio"
-            android:text="sonido"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            android:text="play"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.554" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/go_button"
+            android:id="@+id/timeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Go"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            android:layout_marginStart="112dp"
+            android:layout_marginLeft="112dp"
+            android:layout_marginTop="83dp"
+            android:onClick="setAlarm"
+            android:text="time time"
+            app:layout_constraintStart_toEndOf="@+id/playButton"
+            app:layout_constraintTop_toBottomOf="@+id/timePicker1" />
+
     </android.support.constraint.ConstraintLayout>
 
 </RelativeLayout>
