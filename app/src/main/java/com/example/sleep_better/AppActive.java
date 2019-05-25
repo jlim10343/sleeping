@@ -20,11 +20,21 @@ public class AppActive extends AppCompatActivity {
         int hour = intent.getIntExtra("hour", 0);
         int min = intent.getIntExtra("minute", 0);
         String amPm = intent.getStringExtra("meridian");
+        registerReceiver(broadcastReceiver, new IntentFilter("unSleep"));
 
 
         Log.d("info", hour + ":" + min + " " + amPm);
 
     }
 
-
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle b = intent.getExtras();
+            Log.e(TAG, "Alarm resolved");
+            Intent i = new Intent(AppActive.this, MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+        }
+    };
 }
