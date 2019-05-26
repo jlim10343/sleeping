@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 public class AppActive extends AppCompatActivity {
 
@@ -38,4 +39,16 @@ public class AppActive extends AppCompatActivity {
             startActivity(i);
         }
     };
+
+    public void wakeUp(View v){
+        Intent i = new Intent(AppActive.this, MainActivity.class);
+        Log.d("E","SFDOIJ");
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        frag=null;
+        unregisterReceiver(broadcastReceiver);
+        MainActivity a = MainActivity.getInstance();
+        a.cancelAlarm();
+        startActivity(i);
+    }
+
 }

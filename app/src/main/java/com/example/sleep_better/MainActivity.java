@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private PendingIntent alarmIntent;
     private TimePicker time;
     private boolean isAsleep;
-    private Fragment frag;
+    static MainActivity instance;
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -54,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
             audio.start();
         }
     };
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
 
     private final String TAG = "in MainActivity";
 
@@ -134,6 +138,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void stopAlarm(View v){
+        onPause();
+    }
+
     public void setAlarm(View v) {
         Log.d(TAG,Integer.toString(time.getCurrentHour()));
         registerReceiver(broadcastReceiver, new IntentFilter("unSleep"));
@@ -154,5 +162,11 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, AppActive.class);
         startActivity(intent);
+    }
+
+    public void cancelAlarm(){
+        if(alarmMgr!=null) {
+            alarmMgr.cancel(alarmIntent);
+        }
     }
 }

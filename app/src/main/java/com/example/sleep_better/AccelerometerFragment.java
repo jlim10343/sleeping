@@ -45,16 +45,16 @@ public class AccelerometerFragment extends Fragment {
 
             if(running) {
                 Log.d("EOIS",mag + "");
-                if(mag < 9.7) {
-                    Log.d("magnitude", mag + "");
+                if(mag < 9.68) {
+                    Log.e("magnitude", mag + "");
                     if(audio == null) {
                         audio = MediaPlayer.create(getContext(),R.raw.catnoise);
-                        audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        /*audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                             @Override
                             public void onCompletion(MediaPlayer mp) {
                                 stopPlayer();
                             }
-                        });
+                        });*/
                     }
                     audio.start();
                 }
@@ -82,7 +82,7 @@ public class AccelerometerFragment extends Fragment {
         @Override
         public void run() {
             running = true;
-            handler.postDelayed(this,3000);
+            handler.postDelayed(this,20000);
         }
     };
 
@@ -91,7 +91,7 @@ public class AccelerometerFragment extends Fragment {
     public void onResume() {
         super.onResume();
         sensorManager.registerListener(listener,sensor,SensorManager.SENSOR_DELAY_NORMAL);
-        handler.post(turnOn);
+        handler.postDelayed(turnOn,20000);
     }
 
     @Override
