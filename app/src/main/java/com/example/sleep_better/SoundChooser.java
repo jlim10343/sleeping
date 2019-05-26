@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class SoundChooser extends Fragment {
@@ -21,50 +22,74 @@ public class SoundChooser extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_sound_chooser, container, false);
 
+        Button first = view.findViewById(R.id.buttonFirst);
+        first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(audio == null) {
+                    audio = MediaPlayer.create(getActivity(), R.raw.small);
+                    MainActivity.setAudio(audio);
+                    audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            stopPlayer();
+                        }
+                    });
+                }
+                audio.start();
+            }
+        });
+
+        Button second = view.findViewById(R.id.buttonSecond);
+        second.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(audio == null) {
+                    audio = MediaPlayer.create(getActivity(), R.raw.big);
+                    MainActivity.setAudio(audio);
+                    audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            stopPlayer();
+                        }
+                    });
+                }
+                audio.start();
+            }
+        });
+
+        Button cat = view.findViewById(R.id.button3);
+        cat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(audio == null) {
+                    audio = MediaPlayer.create(getActivity(),R.raw.catnoise);
+                    MainActivity.setAudio(audio);
+                    audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            stopPlayer();
+                        }
+                    });
+                }
+                audio.start();
+            }
+        });
+
         return view;
     }
 
     public void play1000Hz(View v) {
-        if(audio == null) {
-            audio = MediaPlayer.create(getActivity(), R.raw.small);
-            MainActivity.setAudio(audio);
-            audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    stopPlayer();
-                }
-            });
-        }
-        audio.start();
+
 
     }
 
     public void play2000Hz(View v) {
-        if(audio == null) {
-            audio = MediaPlayer.create(getActivity(), R.raw.big);
-            MainActivity.setAudio(audio);
-            audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    stopPlayer();
-                }
-            });
-        }
-        audio.start();
+
     }
 
     public void playCats(View v) {
-        if(audio == null) {
-            audio = MediaPlayer.create(getActivity(),R.raw.catnoise);
-            MainActivity.setAudio(audio);
-            audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    stopPlayer();
-                }
-            });
-        }
-        audio.start();
+
     }
 
     private void stopPlayer() {
