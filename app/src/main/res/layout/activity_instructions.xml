@@ -11,7 +11,7 @@
         android:layout_width="334dp"
         android:layout_height="159dp"
         android:gravity="center"
-        android:text="@string/instructions"
+        android:text="To use our app, simply set the time you wish to wake up and choose a sound to be played every 20 seconds. For best results, test all different sound options."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
