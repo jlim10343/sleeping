@@ -28,11 +28,6 @@ public class HomeFragment extends Fragment {
     private TimePicker time;
     private static MediaPlayer audio;
     private final String TAG = "in HomeFragment";
-    static HomeFragment instance;
-
-    public static HomeFragment getInstance() {
-        return instance;
-    }
 
     public static void setAudio(MediaPlayer m) { audio=m; }
 
@@ -54,9 +49,9 @@ public class HomeFragment extends Fragment {
                 //Gets time from TimePicker
                 getActivity().registerReceiver(broadcastReceiver, new IntentFilter("unSleep"));
                 Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.SECOND, 0);
                 calendar.set(Calendar.HOUR_OF_DAY,time.getCurrentHour());
-                calendar.set(Calendar.MINUTE,time.getCurrentMinute());
+                calendar.set(Calendar.MINUTE,time.getCurrentMinute()-1);
 
                 //Sets an alarm for the specified time to repeat every 15 minutes
                 alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP,
