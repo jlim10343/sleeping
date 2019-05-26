@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class AppActive extends AppCompatActivity {
 
@@ -24,6 +26,19 @@ public class AppActive extends AppCompatActivity {
         frag = new AccelerometerFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 frag).commit();
+
+        Button b = findViewById(R.id.cancelButton);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new HomeFragment()).commit();
+                setContentView(R.layout.empty);
+                TextView tv = findViewById(R.id.textView4);
+                tv.setVisibility(View.INVISIBLE);
+
+            }
+        });
 
     }
 
@@ -49,5 +64,12 @@ public class AppActive extends AppCompatActivity {
         MainActivity a = MainActivity.getInstance();
         startActivity(i);
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+
 
 }

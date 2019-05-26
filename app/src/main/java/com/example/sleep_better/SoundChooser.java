@@ -28,7 +28,7 @@ public class SoundChooser extends Fragment {
             public void onClick(View v) {
                 if(audio == null) {
                     audio = MediaPlayer.create(getActivity(), R.raw.small);
-                    MainActivity.setAudio(audio);
+                    HomeFragment.setAudio(audio);
                     audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
@@ -46,7 +46,7 @@ public class SoundChooser extends Fragment {
             public void onClick(View v) {
                 if(audio == null) {
                     audio = MediaPlayer.create(getActivity(), R.raw.big);
-                    MainActivity.setAudio(audio);
+                    HomeFragment.setAudio(audio);
                     audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
@@ -64,7 +64,7 @@ public class SoundChooser extends Fragment {
             public void onClick(View v) {
                 if(audio == null) {
                     audio = MediaPlayer.create(getActivity(),R.raw.catnoise);
-                    MainActivity.setAudio(audio);
+                    HomeFragment.setAudio(audio);
                     audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
@@ -77,19 +77,6 @@ public class SoundChooser extends Fragment {
         });
 
         return view;
-    }
-
-    public void play1000Hz(View v) {
-
-
-    }
-
-    public void play2000Hz(View v) {
-
-    }
-
-    public void playCats(View v) {
-
     }
 
     private void stopPlayer() {

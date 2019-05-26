@@ -41,25 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private static MediaPlayer audio;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
-    private TimePicker time;
     private boolean isAsleep;
     private Fragment frag;
     static MainActivity instance;
-
-    public static void setAudio(MediaPlayer m) { audio = m; }
-
-    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle b = intent.getExtras();
-            isAsleep = b.getBoolean("sleep");
-            unregisterReceiver(broadcastReceiver);
-            //frag = null;
-            Log.e(TAG, "Alarm resolved");
-            //audio = MediaPlayer.create(context,R.raw.analogwatchalarmdanielsimion);
-            audio.start();
-        }
-    };
 
     public static MainActivity getInstance() {
         return instance;
@@ -85,16 +69,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.empty);
-
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        time=(TimePicker) findViewById(R.id.timePicker1);
-        alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, MyAlarmReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        isAsleep = false;
 
-        audio = MediaPlayer.create(getBaseContext(),R.raw.analogwatchalarmdanielsimion);
 
     }
 
@@ -160,28 +137,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void stopAlarm(View v){
         onPause();
-    }
-
-    public void setAlarm(View v) {
-        Log.d(TAG,Integer.toString(time.getCurrentHour()));
-        registerReceiver(broadcastReceiver, new IntentFilter("unSleep"));
-        Intent sleep = new Intent("doSleep");
-        sleep.putExtra("sleep",true);
-        this.sendBroadcast(sleep);
-        isAsleep = true;
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY,time.getCurrentHour());
-        calendar.set(Calendar.MINUTE,time.getCurrentMinute());
-        //frag = new AccelerometerFragment();
-        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-          //      frag).commit();
-
-        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                calendar.getTimeInMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
-
-        Intent intent = new Intent(this, AppActive.class);
-        startActivity(intent);
     }
 
 
