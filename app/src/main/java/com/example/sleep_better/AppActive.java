@@ -47,7 +47,6 @@ public class AppActive extends AppCompatActivity {
         frag=null;
         unregisterReceiver(broadcastReceiver);
         MainActivity a = MainActivity.getInstance();
-        a.cancelAlarm();
         startActivity(i);
     }
 

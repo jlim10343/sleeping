@@ -9,14 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserFeedback"></activity>
-
-        <meta-data
-            android:name="com.google.android.actions"
-            android:resource="@xml/button_background" />
-
-        <activity android:name=".SoundChooser" />
-        <activity android:name=".Instructions" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

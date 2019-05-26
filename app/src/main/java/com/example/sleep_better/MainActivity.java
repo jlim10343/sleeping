@@ -25,6 +25,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -36,12 +38,16 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MediaPlayer audio;
+    private static MediaPlayer audio;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
     private TimePicker time;
     private boolean isAsleep;
+    private Fragment frag;
     static MainActivity instance;
+
+    public static void setAudio(MediaPlayer m) { audio = m; }
+
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -50,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             unregisterReceiver(broadcastReceiver);
             //frag = null;
             Log.e(TAG, "Alarm resolved");
-            audio = MediaPlayer.create(context,R.raw.analogwatchalarmdanielsimion);
+            //audio = MediaPlayer.create(context,R.raw.analogwatchalarmdanielsimion);
             audio.start();
         }
     };
@@ -78,20 +84,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.empty);
 
-        //BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        //bottomNav.setOnNavigationItemSelectedListener(navListener);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
         time=(TimePicker) findViewById(R.id.timePicker1);
-        alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, MyAlarmReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         isAsleep = false;
 
+        audio = MediaPlayer.create(getBaseContext(),R.raw.analogwatchalarmdanielsimion);
+
     }
 
 
-    /*BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             Fragment selectedFragment = null;
@@ -99,14 +107,26 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.accelerate:
                     selectedFragment = new AccelerometerFragment();
                     break;
+                case R.id.instruct:
+                    selectedFragment = new Instructions();
+                    break;
+                case R.id.soundChoose:
+                    selectedFragment = new SoundChooser();
+                    break;
+                case R.id.goHome:
+                    selectedFragment = new HomeFragment();
+                    break;
             }
+
+            TextView tv = findViewById(R.id.textView4);
+            tv.setVisibility(View.INVISIBLE);
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     selectedFragment).commit();
 
             return false;
         }
-    };*/
+    };
 
     public void playAudio(View v) {
         if(audio == null) {
@@ -164,16 +184,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void cancelAlarm(){
-        if(alarmMgr!=null) {
-            alarmMgr.cancel(alarmIntent);
-        }
-
-        Intent intent = new Intent(this,UserFeedback.class);
-        startActivity(intent);
-
-        }
-
 
     public void instructionsButton(View v){
         Intent intent = new Intent(this,Instructions.class);
@@ -183,12 +193,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void chooseSound(View v){
         Intent intent = new Intent(this,SoundChooser.class);
-        startActivity(intent);
-
-    }
-
-    public void goToFeedback(View v){
-        Intent intent = new Intent(this,UserFeedback.class);
         startActivity(intent);
 
     }
