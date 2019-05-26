@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Bundle b = intent.getExtras();
             isAsleep = b.getBoolean("sleep");
+            unregisterReceiver(broadcastReceiver);
             Log.e(TAG, "Alarm resolved");
             audio = MediaPlayer.create(context,R.raw.analogwatchalarmdanielsimion);
             audio.start();
-            unregisterReceiver(broadcastReceiver);
         }
     };
 
@@ -135,12 +135,18 @@ public class MainActivity extends AppCompatActivity {
     public void setAlarm(View v) {
         Log.d(TAG,Integer.toString(time.getCurrentHour()));
         registerReceiver(broadcastReceiver, new IntentFilter("unSleep"));
+        Intent sleep = new Intent("unSleep");
+        sleep.putExtra("sleep",false);
+        this.sendBroadcast(sleep);
         isAsleep = true;
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY,time.getCurrentHour());
         calendar.set(Calendar.MINUTE,time.getCurrentMinute());
-
+        Fragment selectedFragment = null;
+        selectedFragment = new AccelerometerFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                selectedFragment).commit();
 
         alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP,
                 calendar.getTimeInMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
