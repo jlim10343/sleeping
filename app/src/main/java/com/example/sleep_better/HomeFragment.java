@@ -53,9 +53,9 @@ public class HomeFragment extends Fragment {
                 getActivity().sendBroadcast(sleep);
                 isAsleep = true;
                 Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.SECOND, 0);
                 calendar.set(Calendar.HOUR_OF_DAY,time.getCurrentHour());
-                calendar.set(Calendar.MINUTE,time.getCurrentMinute());
+                calendar.set(Calendar.MINUTE,time.getCurrentMinute()-1);
                 //frag = new AccelerometerFragment();
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 //      frag).commit();
