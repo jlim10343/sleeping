@@ -12,16 +12,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+//Receives an alarm then sends feedback
 public class MyAlarmReceiver extends BroadcastReceiver {
 
+    private final String TAG = "in onReceive";
 
+    //Receives and responds to alarm
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO Auto-generated method stub
+        Log.d(TAG, "Alarm received");
 
-
-        Log.e("onReceive", "Alarm received");
-        Toast.makeText(context, "OnReceive alarm test", Toast.LENGTH_SHORT).show();
+        //Sends a response broadcast
         Intent unSleep = new Intent("unSleep");
         unSleep.putExtra("sleep",false);
         context.sendBroadcast(unSleep);

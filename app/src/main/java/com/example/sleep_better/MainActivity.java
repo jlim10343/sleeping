@@ -36,21 +36,15 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Calendar;
 
+//Alarm set page
 public class MainActivity extends AppCompatActivity {
 
     private static MediaPlayer audio;
-    private AlarmManager alarmMgr;
-    private PendingIntent alarmIntent;
-    private boolean isAsleep;
-    private Fragment frag;
-    static MainActivity instance;
 
-    public static MainActivity getInstance() {
-        return instance;
-    }
 
     private final String TAG = "in MainActivity";
 
+    //Loads fragment
     private boolean loadFragment (Fragment fragment)
     {
         if (fragment != null)
@@ -65,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //Sets up navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,15 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    //Sets up navbar
     BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            Log.d(TAG,"LHEPH");
             Fragment selectedFragment = null;
             switch (menuItem.getItemId()) {
-                case R.id.accelerate:
-                    selectedFragment = new AccelerometerFragment();
-                    break;
                 case R.id.instruct:
                     selectedFragment = new Instructions();
                     break;
@@ -105,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    //Plays default beep noise
     public void playAudio(View v) {
         if(audio == null) {
             audio = MediaPlayer.create(this,R.raw.catnoise);
@@ -118,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         audio.start();
     }
 
+    //Pauses sound playback
     @Override
     protected void onPause() {
         super.onPause();
@@ -126,30 +121,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Stops playback
     private void stopPlayer()
     {
         if(audio != null) {
             audio.release();
             audio = null;
-            Toast.makeText(this,"YEEEE",Toast.LENGTH_SHORT).show();
         }
     }
-
-    public void stopAlarm(View v){
-        onPause();
-    }
-
-
-    public void instructionsButton(View v){
-        Intent intent = new Intent(this,Instructions.class);
-        startActivity(intent);
-
-    }
-
-    public void chooseSound(View v){
-        Intent intent = new Intent(this,SoundChooser.class);
-        startActivity(intent);
-
-    }
-
 }

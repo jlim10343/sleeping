@@ -5,9 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
-
+//Welcome page for App
 public class Empty extends AppCompatActivity {
+
+    private final String TAG = "in Empty";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,14 +22,13 @@ public class Empty extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
     }
 
+    //Navigation bar for moving across pages
     BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            Log.d(TAG, "HELP");
             Fragment selectedFragment = null;
             switch (menuItem.getItemId()) {
-                case R.id.accelerate:
-                    selectedFragment = new AccelerometerFragment();
-                    break;
                 case R.id.instruct:
                     selectedFragment = new Instructions();
                     break;

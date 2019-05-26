@@ -16,10 +16,5 @@
         android:icon="@drawable/ic_speaker_phone_black_24dp"
         android:title="Choose sounds" />
 
-    <item
-        android:id="@+id/accelerate"
-        android:icon="@drawable/ic_compare_arrows_black_24dp"
-        android:title="Accelerate" />
-
 </menu>
 

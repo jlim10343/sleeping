@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+//Manages the accelerometer functionality
 public class AccelerometerFragment extends Fragment {
     private SensorManager sensorManager;
     private Sensor sensor;
@@ -33,28 +34,26 @@ public class AccelerometerFragment extends Fragment {
     private Handler handler;
     private MediaPlayer audio;
 
+    private final String TAG = "in AccelFragment";
+
+    //Triggers tone if the conditions have been met
     private SensorEventListener listener = new SensorEventListener() {
         Handler handler = new Handler();
         @Override
         public void onSensorChanged(SensorEvent event) {
+            //Gets magnitude of acceleration
             float[] vals = event.values;
-            //Log.d("values", "magnitude: " + Math.sqrt(Math.pow(vals[0], 2) + Math.pow(vals[1], 2) + Math.pow(vals[2], 2)) +
-              //      " \tvalue[] = " + vals[0] + " " + vals[1] + " " + vals[2]);
             mag = Math.sqrt(Math.pow(vals[0], 2) + Math.pow(vals[1], 2) + Math.pow(vals[2], 2));
 
-
+            //Set up periodic data collection with boolean value running
             if(running) {
-                Log.d("EOIS",mag + "");
+                Log.d(TAG,"Magnitude" + mag);
+
+                //Threshold for audio play
                 if(mag < 9.68) {
                     Log.e("magnitude", mag + "");
                     if(audio == null) {
                         audio = MediaPlayer.create(getContext(),R.raw.catnoise);
-                        /*audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                            @Override
-                            public void onCompletion(MediaPlayer mp) {
-                                stopPlayer();
-                            }
-                        });*/
                     }
                     audio.start();
                 }
@@ -63,21 +62,14 @@ public class AccelerometerFragment extends Fragment {
 
         }
 
-        private void stopPlayer()
-        {
-            if(audio != null) {
-                audio.release();
-                audio = null;
-                Toast.makeText(getContext(),"YEEEE",Toast.LENGTH_SHORT).show();
-            }
-        }
-
+        //Responds to sensor accuracy adjustments
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
         }
     };
 
+    //Looping code to set up periodic data collection every 20 sec
     private final Runnable turnOn = new Runnable() {
         @Override
         public void run() {
@@ -86,7 +78,7 @@ public class AccelerometerFragment extends Fragment {
         }
     };
 
-
+    //Resumes accelerometer and looping code
     @Override
     public void onResume() {
         super.onResume();
@@ -94,6 +86,7 @@ public class AccelerometerFragment extends Fragment {
         handler.postDelayed(turnOn,20000);
     }
 
+    //Pauses accelerometer and looping code
     @Override
     public void onPause() {
         handler.removeCallbacks(turnOn);
@@ -103,11 +96,12 @@ public class AccelerometerFragment extends Fragment {
         }
     }
 
+    //Sets up sensors and handlers and starts data collection
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.accfragment, container, false);
-        Log.d("EOIS","SDFOIIDFIJOSNQIWONCDSLKN");
+        view = inflater.inflate(R.layout.app_active, container, false);
+        Log.d(TAG,"Fragment started");
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_UI);

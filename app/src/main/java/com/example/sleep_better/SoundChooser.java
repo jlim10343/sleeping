@@ -79,11 +79,11 @@ public class SoundChooser extends Fragment {
         return view;
     }
 
+    //Stops audio playback
     private void stopPlayer() {
             if(audio != null) {
                 audio.release();
                 audio = null;
-                Toast.makeText(getActivity(),"YEEEE",Toast.LENGTH_SHORT).show();
             }
     }
 }
