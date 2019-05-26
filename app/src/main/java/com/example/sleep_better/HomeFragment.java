@@ -75,8 +75,12 @@ public class HomeFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             getActivity().unregisterReceiver(broadcastReceiver);
             Log.d(TAG, "Alarm resolved");
-            audio.start();
+            if(!intent.getBooleanExtra("sleep",false)) {
+                audio.start();
+            }
+
         }
     };
+
 
 }

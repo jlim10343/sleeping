@@ -26,7 +26,6 @@ public class Empty extends AppCompatActivity {
     BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            Log.d(TAG, "HELP");
             Fragment selectedFragment = null;
             switch (menuItem.getItemId()) {
                 case R.id.instruct:

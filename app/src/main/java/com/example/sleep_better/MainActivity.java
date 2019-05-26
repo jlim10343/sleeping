@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            Log.d(TAG,"LHEPH");
             Fragment selectedFragment = null;
             switch (menuItem.getItemId()) {
                 case R.id.instruct:

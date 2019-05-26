@@ -44,7 +44,7 @@ public class AppActive extends AppCompatActivity {
                 unregisterReceiver(broadcastReceiver);
 
                 //Cancels alarm
-
+                cancelAlarm();
 
                 //Returns to alarm page
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -93,6 +93,12 @@ public class AppActive extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    public void cancelAlarm() {
+        Intent unSleep = new Intent("unSleep");
+        unSleep.putExtra("sleep",true);
+        this.sendBroadcast(unSleep);
     }
 
 
