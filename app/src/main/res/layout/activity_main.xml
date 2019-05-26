@@ -30,7 +30,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sleep Better"
+            android:text="SoundAsleep"
             android:textSize="36sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -49,14 +49,26 @@
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <Button
+            android:id="@+id/instructionsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:onClick="instructionsButton"
+            android:text="Instructions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.263"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timePicker1" />
+
+        <Button
             android:id="@+id/timeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="83dp"
+            android:layout_marginTop="48dp"
             android:onClick="setAlarm"
-            android:text="time time"
+            android:text="Start Timer"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.738"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timePicker1" />
 
@@ -64,10 +76,32 @@
             android:id="@+id/stopSound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="20dp"
             android:onClick="stopAlarm"
             android:text="Stop Alarm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeButton" />
+
+        <Button
+            android:id="@+id/chooseSound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="20dp"
+            android:onClick="chooseSound"
+            android:text="Choose Sound"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeButton" />
+
+        <Button
+            android:id="@+id/goToFeedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="88dp"
+            android:onClick="goToFeedback"
+            android:text="Go to Feedback"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeButton" />
 

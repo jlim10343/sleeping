@@ -9,6 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".UserFeedback"></activity>
+
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/button_background" />
+
+        <activity android:name=".SoundChooser" />
+        <activity android:name=".Instructions" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver android:name=".MyAlarmReceiver">
             <intent-filter>
                 <action android:name="com.example.sleep_better" />

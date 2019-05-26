@@ -168,5 +168,29 @@ public class MainActivity extends AppCompatActivity {
         if(alarmMgr!=null) {
             alarmMgr.cancel(alarmIntent);
         }
+
+        Intent intent = new Intent(this,UserFeedback.class);
+        startActivity(intent);
+
+        }
+
+
+    public void instructionsButton(View v){
+        Intent intent = new Intent(this,Instructions.class);
+        startActivity(intent);
+
     }
+
+    public void chooseSound(View v){
+        Intent intent = new Intent(this,SoundChooser.class);
+        startActivity(intent);
+
+    }
+
+    public void goToFeedback(View v){
+        Intent intent = new Intent(this,UserFeedback.class);
+        startActivity(intent);
+
+    }
+
 }
