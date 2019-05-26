@@ -1,5 +1,6 @@
 package com.example.sleep_better;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -29,18 +30,8 @@ public class AccelerometerFragment extends Fragment {
     private Handler handler;
     private MediaPlayer audio;
 
-    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle b = intent.getExtras();
-            Log.e("AccelerometerFragment", "Update received");
-            if(b.getBoolean("sleep")) {
-                sensorManager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_UI);
-            } else {
-                sensorManager.unregisterListener(listener,sensor);
-            }
-        }
-    };
+
+
 
     private SensorEventListener listener = new SensorEventListener() {
         Handler handler = new Handler();
@@ -50,6 +41,7 @@ public class AccelerometerFragment extends Fragment {
             //Log.d("values", "magnitude: " + Math.sqrt(Math.pow(vals[0], 2) + Math.pow(vals[1], 2) + Math.pow(vals[2], 2)) +
               //      " \tvalue[] = " + vals[0] + " " + vals[1] + " " + vals[2]);
             mag = Math.sqrt(Math.pow(vals[0], 2) + Math.pow(vals[1], 2) + Math.pow(vals[2], 2));
+
 
             if(running) {
                 Log.d("EOIS",mag + "");
@@ -94,6 +86,7 @@ public class AccelerometerFragment extends Fragment {
         }
     };
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -114,13 +107,12 @@ public class AccelerometerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.accfragment, container, false);
-
+        Log.d("EOIS","SDFOIIDFIJOSNQIWONCDSLKN");
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_UI);
-        getActivity().registerReceiver(broadcastReceiver, new IntentFilter("unSleep"));
         handler = new Handler();
-        sensorManager.unregisterListener(listener,sensor);
+        handler.post(turnOn);
         return view;
     }
 

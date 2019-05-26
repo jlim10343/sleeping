@@ -41,12 +41,14 @@ public class MainActivity extends AppCompatActivity {
     private PendingIntent alarmIntent;
     private TimePicker time;
     private boolean isAsleep;
+    private Fragment frag;
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle b = intent.getExtras();
             isAsleep = b.getBoolean("sleep");
             unregisterReceiver(broadcastReceiver);
+            //frag = null;
             Log.e(TAG, "Alarm resolved");
             audio = MediaPlayer.create(context,R.raw.analogwatchalarmdanielsimion);
             audio.start();
@@ -74,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        //BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        //bottomNav.setOnNavigationItemSelectedListener(navListener);
         time=(TimePicker) findViewById(R.id.timePicker1);
         alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, MyAlarmReceiver.class);
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    /*BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             Fragment selectedFragment = null;
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         }
-    };
+    };*/
 
     public void playAudio(View v) {
         if(audio == null) {
@@ -135,18 +137,17 @@ public class MainActivity extends AppCompatActivity {
     public void setAlarm(View v) {
         Log.d(TAG,Integer.toString(time.getCurrentHour()));
         registerReceiver(broadcastReceiver, new IntentFilter("unSleep"));
-        Intent sleep = new Intent("unSleep");
-        sleep.putExtra("sleep",false);
+        Intent sleep = new Intent("doSleep");
+        sleep.putExtra("sleep",true);
         this.sendBroadcast(sleep);
         isAsleep = true;
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY,time.getCurrentHour());
         calendar.set(Calendar.MINUTE,time.getCurrentMinute());
-        Fragment selectedFragment = null;
-        selectedFragment = new AccelerometerFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                selectedFragment).commit();
+        //frag = new AccelerometerFragment();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+          //      frag).commit();
 
         alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP,
                 calendar.getTimeInMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);

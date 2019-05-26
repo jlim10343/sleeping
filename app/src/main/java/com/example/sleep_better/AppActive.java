@@ -5,18 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 public class AppActive extends AppCompatActivity {
 
     private final String TAG = "in AppActive";
+    private Fragment frag;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_active);
         registerReceiver(broadcastReceiver, new IntentFilter("unSleep"));
+        frag = new AccelerometerFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                frag).commit();
 
     }
 
@@ -27,6 +33,7 @@ public class AppActive extends AppCompatActivity {
             Log.e(TAG, "Alarm resolved");
             Intent i = new Intent(AppActive.this, MainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            frag=null;
             unregisterReceiver(broadcastReceiver);
             startActivity(i);
         }
