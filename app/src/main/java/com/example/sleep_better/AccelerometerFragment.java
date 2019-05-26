@@ -8,6 +8,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class AccelerometerFragment extends Fragment {
     private SensorManager sensorManager;
@@ -25,6 +27,7 @@ public class AccelerometerFragment extends Fragment {
     private double mag;
     private boolean running = true;
     private Handler handler;
+    private MediaPlayer audio;
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -49,10 +52,32 @@ public class AccelerometerFragment extends Fragment {
             mag = Math.sqrt(Math.pow(vals[0], 2) + Math.pow(vals[1], 2) + Math.pow(vals[2], 2));
 
             if(running) {
-                Log.d("EOIS","EIONSODICNOEIWAF");
+                Log.d("EOIS",mag + "");
+                if(mag < 9.7) {
+                    Log.d("magnitude", mag + "");
+                    if(audio == null) {
+                        audio = MediaPlayer.create(getContext(),R.raw.catnoise);
+                        audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                stopPlayer();
+                            }
+                        });
+                    }
+                    audio.start();
+                }
                 running = false;
             }
 
+        }
+
+        private void stopPlayer()
+        {
+            if(audio != null) {
+                audio.release();
+                audio = null;
+                Toast.makeText(getContext(),"YEEEE",Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
@@ -80,6 +105,9 @@ public class AccelerometerFragment extends Fragment {
     public void onPause() {
         handler.removeCallbacks(turnOn);
         super.onPause();
+        if(audio != null) {
+            audio.release();
+        }
     }
 
     @Nullable

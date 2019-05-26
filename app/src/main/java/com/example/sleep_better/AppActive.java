@@ -16,14 +16,7 @@ public class AppActive extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_active);
-        Intent intent = getIntent();
-        int hour = intent.getIntExtra("hour", 0);
-        int min = intent.getIntExtra("minute", 0);
-        String amPm = intent.getStringExtra("meridian");
         registerReceiver(broadcastReceiver, new IntentFilter("unSleep"));
-
-
-        Log.d("info", hour + ":" + min + " " + amPm);
 
     }
 
